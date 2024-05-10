@@ -1,6 +1,8 @@
 # 4. Divergence
 
-## 4.1. Before I go ahead and calculate _dN/dS_, I wanted to (i) identify which species pairs to use, (ii) check divergence (Dxy) between species within each pair, and (iii) identify orthologous genes within pairs from which to calculate _dN/dS_.
+### 4.1. Prep - identifying species pairs
+
+Before I go ahead and calculate _dN/dS_, I wanted to (i) identify which species pairs to use, (ii) check divergence (Dxy) between species within each pair, and (iii) identify orthologous genes within pairs from which to calculate _dN/dS_.
 
 To identify which species pairs to use, I generated a phylogeny using the BUSCO output from when I generated the genome assemblies (I had to run BUSCO on all the other genomes too, using the insecta database). Dilophus (Bibionidae) will be the outgroup. I used BUSCO phylogenomics:
 
@@ -61,7 +63,7 @@ mv $OUT/Results_$OUT/Orthogroups/Orthogroups.tsv $OUT.OGs.tsv
 mv $OUT/Results_$OUT/Orthogroups/Orthogroups_SingleCopyOrthologues.txt $OUT.SCOs.tsv
 ```
 
-## 4.2. Site counts: synonymous and nonsynonymous sites per gene
+### 4.2. Site counts: synonymous and nonsynonymous sites per gene
 
 In order to calculate _dN/dS_, I need to run degeneracy annotations for each species. This is to get the number of synonymous and non-synonymous _sites_ per gene, i.e. the denominators in _dN/dS_. Remember that _dN/dS_ is the ratio of the number of nonsynonymous substitutions per non-synonymous site to the number of synonymous substitutions per synonymous site.
 
@@ -177,6 +179,7 @@ gzip gimble.cds.bed
 ```
 
 ...and then intersected this with a bed file to include a gene column (the script doesn't output that unfortunately):
+
 ```
 gff2bed < anno.gff3 > anno.bed
 ANNO=anno.bed
@@ -230,7 +233,7 @@ nrow(all_degen_counts)
 write.table(all_degen_counts, file='degen_site_counts.tsv', row.names=F, col.names=T, quote=F, sep='\t')
 ```
 
-## 4.3. Variant counts: alignments and variant calling
+### 4.3. Variant counts: alignments and variant calling
 
 Now comes the numerators: the nonsynonymous and synonymous substitutions. 
 
@@ -275,7 +278,7 @@ mv ~/.conda/envs/SnpEff/SnpEff/data/$SPECIES/*.gtf ~/.conda/envs/SnpEff/SnpEff/d
 java -Xmx20g -jar ~/.conda/envs/SnpEff/SnpEff/snpEff.jar build -v $SPECIES
 ```
 
-# And finally, annotate the variants:
+And finally, annotate the variants:
 ```
 # 1. Further filter out intergenic variants, deal with alternative transcripts:
 java -Xmx4g -jar ~/.conda/envs/SnpEff/SnpEff/snpEff.jar \
@@ -298,7 +301,7 @@ I cut out the relevant columns with something like (column numbers may vary depe
 cat Mdes.filterstats.genes.txt | cut -f2,3,19,27,28 > Mdes.filterstats.genes.relevant.txt
 ```
 
-## 4.4. Calculating _dNdS_
+### 4.4. Calculating _dNdS_
 
 Now we have the ingredients required: counts of (i) synonymous and nonsynonymous sites and (ii) synonymous and nonsynonymous mutations.
 
