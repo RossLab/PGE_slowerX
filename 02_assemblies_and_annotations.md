@@ -102,8 +102,8 @@ Proportions of sequences masked are as follows:
 | Species | Genome length | % masked |
 | - | - | - |
 | Aphidoletes aphidimyza | 191431736 | 33.5611% |
-| Bradysia confinis	338817951 | 31.213% |
-| Bradysia desolata	275897695 | 34.4701% |
+| Bradysia confinis |	338817951 | 31.213% |
+| Bradysia desolata |	275897695 | 34.4701% |
 | Bradysia pectoralis | 255331210 | 35.0162% |
 | Conarinia rumicis	162540589 | 33.256% |
 | Lycoriella agraria | 213236371 | 30.9621% |
